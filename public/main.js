@@ -1,22 +1,9 @@
 const { app, BrowserWindow } = require('electron')
 
 const path = require('path')
-const url = require('url');
 const isDev = require('electron-is-dev')
 
 require('@electron/remote/main').initialize()
-
-const env = process.env.NODE_ENV || 'development';
-
-// If development environment
-if (env === 'development') {
-    try {
-        require('electron-reloader')(module, {
-            debug: true,
-            watchRenderer: true
-        });
-    } catch (_) { console.log('Error'); }
-}
 
 function createWindow() {
     // Create the browser window.

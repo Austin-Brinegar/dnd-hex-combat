@@ -1,70 +1,19 @@
-.App {
-  text-align: center;
+body {
+    margin: 0px;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+svg g {
+    fill: #4499a9;
+    fill-opacity: 0.6;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+span svg path {
+    fill: white;
+    stroke: none;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.rainbow_text_animated {
-  background: linear-gradient(
-    to right,
-    #6666ff,
-    #0099ff,
-    #00ff00,
-    #ff3399,
-    #6666ff
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: rainbow_animation 6s ease-in-out infinite;
-  background-size: 400% 100%;
-  text-align: center;
-  text-decoration: underline;
-  font-size: 32px;
-  font-family: monospace;
-  letter-spacing: 5px;
-}
-
-@keyframes rainbow_animation {
-  0%,
-  100% {
-    background-position: 0 0;
-  }
-
-  50% {
-    background-position: 100% 0;
-  }
+svg path {
+    fill: none;
+    stroke: #03090a;
+    stroke-width: 0.1em;
+    stroke-opacity: 0.9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
