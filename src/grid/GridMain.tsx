@@ -14,6 +14,7 @@ interface PathNodes {
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+        margin: 0,
     },
 }));
 
@@ -26,48 +27,6 @@ const GridMain: FC<GridMainProps> = (props) => {
     useEffect(() => {
         const dims = 60 - 5 * (size as number);
         setHexagons(GridGenerator.rectangle(dims, dims));
-        // switch (size) {
-        //     case 1: {
-        //         setHexagons(GridGenerator.rectangle(50, 50));
-        //         break;
-        //     }
-        //     case 2: {
-        //         setHexagons(GridGenerator.rectangle(45, 45));
-        //         break;
-        //     }
-        //     case 3: {
-        //         setHexagons(GridGenerator.rectangle(40, 40));
-        //         break;
-        //     }
-        //     case 4: {
-        //         setHexagons(GridGenerator.rectangle(35, 35));
-        //         break;
-        //     }
-        //     case 5: {
-        //         setHexagons(GridGenerator.rectangle(30, 30));
-        //         break;
-        //     }
-        //     case 6: {
-        //         setHexagons(GridGenerator.rectangle(25, 25));
-        //         break;
-        //     }
-        //     case 7: {
-        //         setHexagons(GridGenerator.rectangle(20, 20));
-        //         break;
-        //     }
-        //     case 8: {
-        //         setHexagons(GridGenerator.rectangle(15, 15));
-        //         break;
-        //     }
-        //     case 9: {
-        //         setHexagons(GridGenerator.rectangle(10, 10));
-        //         break;
-        //     }
-        //     case 10: {
-        //         setHexagons(GridGenerator.rectangle(10, 10));
-        //         break;
-        //     }
-        // }
     }, [size]);
 
     const onHexClick = (event: Event, source: Hexagon) => {
@@ -97,7 +56,7 @@ const GridMain: FC<GridMainProps> = (props) => {
 
     return (
         <div className={classes.root}>
-            <HexGrid width={1200} height={800}>
+            <HexGrid width={1920} height={1267}>
                 <Layout
                     size={{ x: (size as number) + 1, y: (size as number) + 1 }}
                     flat={false}
