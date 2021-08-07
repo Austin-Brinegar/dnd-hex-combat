@@ -85,7 +85,7 @@ const App: FC = () => {
             <Grid container spacing={0}>
                 <Grid item xs={9}>
                     <div className={classes.grid}>
-                        <GridMain size={gridSize} />
+                        <GridMain size={gridSize} combatants={combatants} />
                     </div>
                 </Grid>
                 <Grid item xs={3}>
