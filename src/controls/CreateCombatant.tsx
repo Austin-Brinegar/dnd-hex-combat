@@ -48,6 +48,7 @@ const CreateCombatant: FC<CreateCombatantProps> = (props) => {
     const [initiative, setInitiative] = useState<number>(0);
     const [condition, setCondition] = useState<Condition>(Condition.none);
     const [spellSlots, setSpellSlots] = useState<number[]>([]);
+    const [ac, setAc] = useState<number>(0);
 
     const parseSpellSlots = (s: string) => {
         let newSlots = s.split(',').map((x) => +x);
@@ -64,7 +65,7 @@ const CreateCombatant: FC<CreateCombatantProps> = (props) => {
     };
 
     const createCombatant = () => {
-        const c = new Combatant(name, health, health, speed, initiative, spellSlots);
+        const c = new Combatant(name, health, ac, health, speed, initiative, spellSlots);
         addCombatant(c);
         clearState();
         closeDialog();
@@ -115,6 +116,14 @@ const CreateCombatant: FC<CreateCombatantProps> = (props) => {
                         variant="outlined"
                         value={speed}
                         onChange={(e) => setSpeed(Number(e.target.value))}
+                        margin="normal"
+                        type="number"
+                    />
+                    <TextField
+                        label="Armor Class"
+                        variant="outlined"
+                        value={ac}
+                        onChange={(e) => setAc(Number(e.target.value))}
                         margin="normal"
                         type="number"
                     />

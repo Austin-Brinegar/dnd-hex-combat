@@ -2,18 +2,27 @@ import Dice from './Dice';
 import Condition from './StatusEffects';
 
 class Attack {
+    name: string;
     hitMod: number;
     damage: Dice;
     damageMod: number;
     range: number;
-    conditionEffect?: Condition;
+    conditionEffect: Condition;
 
-    constructor(hitMod: number, damage: Dice, damageMod: number, range: number, conditionEffect?: Condition) {
+    constructor(
+        name: string,
+        hitMod: number,
+        damage: Dice,
+        damageMod: number,
+        range: number,
+        conditionEffect: Condition,
+    ) {
+        this.name = name;
         this.hitMod = hitMod;
         this.damage = damage;
         this.damageMod = damageMod;
         this.range = range;
-        this.conditionEffect = conditionEffect ? conditionEffect : Condition.none;
+        this.conditionEffect = conditionEffect;
     }
 
     toHit(): number {

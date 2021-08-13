@@ -11,12 +11,11 @@ interface CombatantCardProps {
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
-        flexGrow: 1,
         backgroundColor: 'lightGray',
     },
 }));
 
-const ControlsMain: FC<CombatantCardProps> = (props) => {
+const CombatantCard: FC<CombatantCardProps> = (props) => {
     const { combatant, removeCombatant, updateCombatant } = props;
     const [isReactionUsed, setIsReactionUsed] = useState<boolean>(combatant.isReactionUsed);
     const classes = useStyles();
@@ -28,7 +27,6 @@ const ControlsMain: FC<CombatantCardProps> = (props) => {
     };
 
     useEffect(() => {
-        console.log(combatant);
         setIsReactionUsed(combatant.isReactionUsed);
     }, [combatant]);
 
@@ -64,4 +62,4 @@ const ControlsMain: FC<CombatantCardProps> = (props) => {
     );
 };
 
-export default ControlsMain;
+export default CombatantCard;

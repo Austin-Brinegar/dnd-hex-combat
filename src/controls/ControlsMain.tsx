@@ -14,12 +14,17 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Combatant from '../types/Combatant';
 import CreateCombatant from './CreateCombatant';
 import CombatantCard from './CombatantCard';
+import ActiveCombatantCard from './ActiveCombatantCard';
+import Attack from '../types/Attack';
+import AttackScreen from './AttackScreen';
 
 interface ControlsMainProps {
     combatants: Combatant[];
     addCombatant: (Combatant) => void;
     removeCombatant: (Combatant) => void;
     updateCombatant: (Combatant) => void;
+    showAlert: (b: boolean) => void;
+    setAlertText: (s: string) => void;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -44,10 +49,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ControlsMain: FC<ControlsMainProps> = (props) => {
-    const { combatants, addCombatant, removeCombatant, updateCombatant } = props;
+    const { combatants, addCombatant, removeCombatant, updateCombatant, showAlert, setAlertText } = props;
     const classes = useStyles();
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [combatantsState, setCombatantsState] = useState<Combatant[]>(combatants);
+    const [turn, setTurn] = useState<number>(0);
+    const [attackOpen, setAttackOpen] = useState<boolean>(false);
+    const [attack, setAttack] = useState<Attack>();
+    const [target, setTarget] = useState<Combatant>();
 
     useEffect(() => {
         setCombatantsState(combatants);
@@ -60,6 +69,37 @@ const ControlsMain: FC<ControlsMainProps> = (props) => {
     const handleClose = () => {
         setIsOpen(false);
     };
+
+    const closeAttack = () => {
+        setAttackOpen(false);
+    };
+
+    const nextTurn = () => {
+        let cmbtntIndex = turn + 1;
+        if (cmbtntIndex >= combatantsState.length) {
+            setTurn(0);
+            renewActions(0);
+        } else {
+            setTurn(cmbtntIndex);
+            renewActions(cmbtntIndex);
+        }
+    };
+
+    const renewActions = (index: number) => {
+        let newCmbtnts: Combatant[] = combatantsState;
+        (newCmbtnts[index] as Combatant).startTurn();
+        setCombatantsState(newCmbtnts);
+    };
+
+    const triggerAction = (c: Combatant, a: Attack, t: Combatant) => {
+        setAttack(a);
+        setTarget(t);
+        setAttackOpen(true);
+    };
+
+    const triggerBonusAction = () => {};
+
+    const triggerMovement = () => {};
 
     return (
         <div className={classes.root}>
@@ -76,8 +116,19 @@ const ControlsMain: FC<ControlsMainProps> = (props) => {
                     <ListItemText primary="Add New Combatant" />
                 </ListItem>
                 <Divider />
-                {combatantsState.map((c: Combatant) => {
-                    return (
+                {combatantsState.map((c: Combatant, index: number) => {
+                    return index === turn ? (
+                        <ActiveCombatantCard
+                            combatant={c}
+                            removeCombatant={removeCombatant}
+                            updateCombatant={updateCombatant}
+                            nextTurn={nextTurn}
+                            triggerAction={triggerAction}
+                            triggerBonusAction={triggerBonusAction}
+                            triggerMovement={triggerMovement}
+                            combatants={combatants}
+                        />
+                    ) : (
                         <CombatantCard
                             combatant={c}
                             removeCombatant={removeCombatant}
@@ -87,6 +138,14 @@ const ControlsMain: FC<ControlsMainProps> = (props) => {
                 })}
             </List>
             <CreateCombatant open={isOpen} closeDialog={handleClose} addCombatant={addCombatant} />
+            <AttackScreen
+                open={attackOpen}
+                closeDialog={closeAttack}
+                attack={attack}
+                target={target}
+                showAlert={showAlert}
+                setAlertText={setAlertText}
+            />
         </div>
     );
 };

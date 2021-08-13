@@ -1,10 +1,13 @@
+import Attack from './Attack';
 import Condition from './StatusEffects';
 
 class Combatant {
     name: string;
     health: number;
+    ac: number;
     maxHealth: number;
     speed: number;
+    usedSpeed: number;
     initiative: number;
     condition: Condition;
     spellSlots: number[];
@@ -12,10 +15,12 @@ class Combatant {
     isBonusActionUsed: boolean = false;
     isReactionUsed: boolean = false;
     isObjectInteractionUsed: boolean = false;
+    actions: Attack[] = [];
 
     constructor(
         name: string,
         health: number,
+        ac: number,
         maxHealth: number,
         speed: number,
         initiative: number,
@@ -23,34 +28,56 @@ class Combatant {
     ) {
         this.name = name;
         this.health = health;
+        this.ac = ac;
         this.maxHealth = maxHealth;
         this.speed = speed;
+        this.usedSpeed = 0;
         this.initiative = initiative;
         this.condition = Condition.none;
         this.spellSlots = JSON.parse(JSON.stringify(spellSlots));
     }
 
-    useReaction = () => {
+    public useReaction = () => {
         this.isReactionUsed = true;
     };
 
-    useAction = () => {
+    public useAction = () => {
         this.isActionUsed = true;
     };
 
-    useBonusAction = () => {
+    public useBonusAction = () => {
         this.isBonusActionUsed = true;
     };
 
-    useObjectInteraction = () => {
+    public useObjectInteraction = () => {
         this.isObjectInteractionUsed = true;
     };
 
-    startTurn = () => {
+    public move = (distance: number) => {
+        this.usedSpeed += distance;
+    };
+
+    public getMovementLeft = () => {
+        return this.speed - this.usedSpeed;
+    };
+
+    public startTurn = () => {
         this.isReactionUsed = false;
         this.isActionUsed = false;
         this.isBonusActionUsed = false;
         this.isObjectInteractionUsed = false;
+    };
+
+    public addAction = (a: Attack) => {
+        this.actions.push(a);
+    };
+
+    public takeDamage = (amount: number) => {
+        this.health -= amount;
+    };
+
+    public applyCondition = (condition: Condition) => {
+        this.condition = condition;
     };
 }
 

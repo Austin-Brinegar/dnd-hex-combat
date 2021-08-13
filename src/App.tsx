@@ -7,6 +7,9 @@ import './App.css';
 import Sidebar from './sidebar/Sidebar';
 import GridSettings from './sidebar/GridSettings';
 import Combatant from './types/Combatant';
+import Attack from './types/Attack';
+import { ContactSupportSharp } from '@material-ui/icons';
+import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -40,8 +43,11 @@ const App: FC = () => {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const [gridSize, setGridSize] = useState<number | number[]>(5);
     const [combatants, setCombatants] = useState<Combatant[]>([]);
+    const [showAlert, setShowAlert] = useState<boolean>(false);
+    const [alertText, setAlertText] = useState<string>('something went wrong');
 
     const addCombatant = (c: Combatant) => {
+        console.log(c, combatants);
         let newCombatants = combatants.concat(c);
         setCombatants(newCombatants);
     };
@@ -59,7 +65,6 @@ const App: FC = () => {
         let newCombatants = combatants;
         let index = newCombatants.indexOf(c, 0);
         newCombatants[index] = c;
-        console.log(newCombatants);
         setCombatants(newCombatants);
     };
 
@@ -82,6 +87,17 @@ const App: FC = () => {
                     </Typography>
                 </Toolbar>
             </AppBar>
+            {showAlert ? (
+                <Alert
+                    severity={alertText === 'You Missed!' ? 'warning' : 'success'}
+                    onClick={() => setShowAlert(false)}
+                    onClose={() => setShowAlert(false)}
+                >
+                    {alertText}
+                </Alert>
+            ) : (
+                <div />
+            )}
             <Grid container spacing={0}>
                 <Grid item xs={9}>
                     <div className={classes.grid}>
@@ -95,6 +111,8 @@ const App: FC = () => {
                             addCombatant={addCombatant}
                             removeCombatant={removeCombatant}
                             updateCombatant={updateCombatant}
+                            setAlertText={setAlertText}
+                            showAlert={setShowAlert}
                         />
                     </div>
                 </Grid>

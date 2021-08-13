@@ -8,4 +8,7 @@ enum DiceType {
     d100 = 100,
 }
 
+const DiceTypes = [DiceType.d4, DiceType.d6, DiceType.d8, DiceType.d10, DiceType.d12, DiceType.d20, DiceType.d100];
+
 export default DiceType;
+export { DiceTypes };
